@@ -1,0 +1,1936 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bài Học AI Tương Tác | Khóa Học AI Cho Người Mới Bắt Đầu</title>
+<style>
+  :root {
+    --vtb-red: #D71249;
+    --vtb-red-2: #E21D50;
+    --vtb-darkblue: #005993;
+    --vtb-blue: #007DB7;
+    --vtb-lightblue: #7ED3F7;
+    --vtb-white: #FFFFFF;
+    --text-dark: #1a1a2e;
+    --text-muted: #5a6478;
+    --bg-soft: #f5f9fd;
+    --border: #e3eaf3;
+    --success: #16a34a;
+    --warning: #f59e0b;
+    --danger: #dc2626;
+    --shadow-sm: 0 4px 12px rgba(0, 89, 147, 0.08);
+    --shadow-md: 0 12px 32px rgba(0, 89, 147, 0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    line-height: 1.65;
+    color: var(--text-dark);
+    background: var(--bg-soft);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  /* ============ HEADER ============ */
+  header {
+    background: linear-gradient(135deg, var(--vtb-darkblue), var(--vtb-blue));
+    color: white;
+    padding: 18px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .header-wrap {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .logo-icon {
+    width: 38px;
+    height: 38px;
+    background: var(--vtb-red);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+  }
+
+  .header-actions {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+  }
+
+  .progress-info {
+    background: rgba(255,255,255,0.15);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    backdrop-filter: blur(10px);
+  }
+
+  .btn-back {
+    background: var(--vtb-red);
+    color: white;
+    padding: 9px 20px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s;
+  }
+
+  .btn-back:hover {
+    background: var(--vtb-red-2);
+    transform: translateY(-1px);
+  }
+
+  /* ============ LAYOUT ============ */
+  .layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    max-width: 1400px;
+    margin: 0 auto;
+    min-height: calc(100vh - 70px);
+  }
+
+  /* ============ SIDEBAR ============ */
+  .sidebar {
+    background: white;
+    border-right: 1px solid var(--border);
+    padding: 24px 0;
+    position: sticky;
+    top: 70px;
+    height: calc(100vh - 70px);
+    overflow-y: auto;
+  }
+
+  .sidebar h3 {
+    padding: 0 24px 16px;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-muted);
+  }
+
+  .module-nav {
+    list-style: none;
+  }
+
+  .module-nav-item {
+    border-left: 3px solid transparent;
+    transition: all 0.3s;
+  }
+
+  .module-nav-item.active {
+    border-left-color: var(--vtb-red);
+    background: linear-gradient(90deg, rgba(215, 18, 73, 0.05), transparent);
+  }
+
+  .module-nav-item a {
+    display: block;
+    padding: 12px 24px;
+    color: var(--text-dark);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.3s;
+  }
+
+  .module-nav-item a:hover { color: var(--vtb-red); }
+
+  .module-nav-item.active a {
+    color: var(--vtb-red);
+    font-weight: 700;
+  }
+
+  .module-nav-num {
+    display: inline-block;
+    width: 26px;
+    height: 26px;
+    background: var(--bg-soft);
+    color: var(--vtb-darkblue);
+    border-radius: 50%;
+    text-align: center;
+    line-height: 26px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-right: 10px;
+  }
+
+  .module-nav-item.active .module-nav-num {
+    background: var(--vtb-red);
+    color: white;
+  }
+
+  .module-nav-item.completed .module-nav-num {
+    background: var(--success);
+    color: white;
+  }
+
+  /* ============ MAIN CONTENT ============ */
+  .content {
+    padding: 40px 50px;
+    max-width: 960px;
+  }
+
+  .module-header {
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid var(--border);
+  }
+
+  .module-tag {
+    display: inline-block;
+    background: rgba(215, 18, 73, 0.1);
+    color: var(--vtb-red);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+
+  .module-header h1 {
+    font-size: 36px;
+    color: var(--vtb-darkblue);
+    margin-bottom: 12px;
+    line-height: 1.25;
+  }
+
+  .module-meta {
+    display: flex;
+    gap: 18px;
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+
+  .module-meta span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* ============ LESSON CARD ============ */
+  .lesson {
+    background: white;
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow-sm);
+    border-top: 4px solid var(--vtb-blue);
+  }
+
+  .lesson:nth-child(2n) { border-top-color: var(--vtb-red); }
+
+  .lesson-num {
+    display: inline-block;
+    background: var(--vtb-darkblue);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .lesson h2 {
+    font-size: 26px;
+    color: var(--text-dark);
+    margin-bottom: 18px;
+    line-height: 1.3;
+  }
+
+  .lesson h3 {
+    font-size: 18px;
+    color: var(--vtb-darkblue);
+    margin: 24px 0 12px;
+  }
+
+  .lesson p {
+    color: var(--text-dark);
+    margin-bottom: 14px;
+    font-size: 15px;
+  }
+
+  .lesson ul, .lesson ol {
+    margin: 12px 0 16px 22px;
+    color: var(--text-dark);
+    font-size: 15px;
+  }
+
+  .lesson li { margin-bottom: 8px; }
+
+  /* ============ ILLUSTRATION BOX ============ */
+  .illustration {
+    background: linear-gradient(135deg, rgba(126, 211, 247, 0.2), rgba(0, 125, 183, 0.05));
+    border-radius: 14px;
+    padding: 28px;
+    margin: 22px 0;
+    border-left: 4px solid var(--vtb-blue);
+  }
+
+  .illustration h4 {
+    color: var(--vtb-darkblue);
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* ============ ANALOGY ============ */
+  .analogy {
+    background: linear-gradient(135deg, #fff8e1, #fffbeb);
+    border-radius: 14px;
+    padding: 22px;
+    margin: 18px 0;
+    border-left: 4px solid var(--warning);
+  }
+
+  .analogy strong {
+    color: #92400e;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  /* ============ PROMPT EXAMPLE ============ */
+  .prompt-box {
+    background: #1e293b;
+    color: #e2e8f0;
+    border-radius: 12px;
+    padding: 0;
+    margin: 18px 0;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+  }
+
+  .prompt-header {
+    background: rgba(0,0,0,0.3);
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .prompt-label {
+    font-size: 12px;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 600;
+  }
+
+  .copy-btn {
+    background: var(--vtb-blue);
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+  }
+
+  .copy-btn:hover { background: var(--vtb-darkblue); }
+  .copy-btn.copied { background: var(--success); }
+
+  .prompt-content {
+    padding: 20px;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 14px;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  /* ============ COMPARISON TABLE ============ */
+  .comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 20px 0;
+  }
+
+  .comp-col {
+    padding: 22px;
+    border-radius: 14px;
+  }
+
+  .comp-bad {
+    background: #fef2f2;
+    border-left: 4px solid var(--danger);
+  }
+
+  .comp-good {
+    background: #f0fdf4;
+    border-left: 4px solid var(--success);
+  }
+
+  .comp-col h5 {
+    color: var(--text-dark);
+    font-size: 14px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+  }
+
+  .comp-bad h5 { color: var(--danger); }
+  .comp-good h5 { color: var(--success); }
+
+  .comp-col p {
+    font-size: 14px;
+    margin: 0;
+  }
+
+  /* ============ INTERACTIVE TRY ============ */
+  .try-it {
+    background: linear-gradient(135deg, rgba(215, 18, 73, 0.05), rgba(226, 29, 80, 0.02));
+    border: 2px dashed var(--vtb-red);
+    border-radius: 14px;
+    padding: 24px;
+    margin: 22px 0;
+  }
+
+  .try-it h4 {
+    color: var(--vtb-red);
+    font-size: 16px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .try-it textarea {
+    width: 100%;
+    min-height: 100px;
+    padding: 14px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 14px;
+    resize: vertical;
+    margin-top: 10px;
+  }
+
+  .try-it textarea:focus {
+    outline: none;
+    border-color: var(--vtb-blue);
+    box-shadow: 0 0 0 3px rgba(0, 125, 183, 0.15);
+  }
+
+  .try-btn {
+    background: var(--vtb-red);
+    color: white;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 12px;
+    transition: all 0.3s;
+  }
+
+  .try-btn:hover { background: var(--vtb-red-2); }
+
+  .feedback {
+    margin-top: 14px;
+    padding: 14px;
+    border-radius: 10px;
+    background: white;
+    border: 1px solid var(--border);
+    display: none;
+    font-size: 14px;
+  }
+
+  .feedback.show { display: block; }
+  .feedback strong { color: var(--vtb-darkblue); }
+
+  /* ============ QUIZ ============ */
+  .quiz {
+    background: white;
+    border: 2px solid var(--vtb-blue);
+    border-radius: 14px;
+    padding: 24px;
+    margin: 22px 0;
+  }
+
+  .quiz h4 {
+    color: var(--vtb-darkblue);
+    font-size: 17px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .quiz-question {
+    font-weight: 600;
+    margin-bottom: 14px;
+    font-size: 15px;
+  }
+
+  .quiz-options {
+    list-style: none;
+    margin: 0;
+  }
+
+  .quiz-options li {
+    margin-bottom: 10px;
+  }
+
+  .quiz-option {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    background: var(--bg-soft);
+    border: 2px solid transparent;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 14px;
+  }
+
+  .quiz-option:hover {
+    background: rgba(0, 125, 183, 0.08);
+    border-color: var(--vtb-blue);
+  }
+
+  .quiz-option.selected {
+    border-color: var(--vtb-blue);
+    background: rgba(0, 125, 183, 0.12);
+  }
+
+  .quiz-option.correct {
+    border-color: var(--success);
+    background: #f0fdf4;
+  }
+
+  .quiz-option.incorrect {
+    border-color: var(--danger);
+    background: #fef2f2;
+  }
+
+  .quiz-option input { margin-right: 12px; }
+
+  .quiz-result {
+    margin-top: 14px;
+    padding: 14px;
+    border-radius: 10px;
+    display: none;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .quiz-result.correct {
+    display: block;
+    background: #f0fdf4;
+    color: #166534;
+    border-left: 4px solid var(--success);
+  }
+
+  .quiz-result.incorrect {
+    display: block;
+    background: #fef2f2;
+    color: #991b1b;
+    border-left: 4px solid var(--danger);
+  }
+
+  /* ============ KEY POINTS ============ */
+  .key-points {
+    background: linear-gradient(135deg, rgba(0, 89, 147, 0.04), rgba(0, 125, 183, 0.02));
+    border-radius: 14px;
+    padding: 24px;
+    margin: 22px 0;
+  }
+
+  .key-points h4 {
+    color: var(--vtb-darkblue);
+    font-size: 16px;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .key-points ul {
+    list-style: none;
+    margin: 0;
+  }
+
+  .key-points li {
+    padding: 8px 0 8px 28px;
+    position: relative;
+    font-size: 14px;
+  }
+
+  .key-points li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--success);
+    font-weight: 900;
+    width: 22px;
+    height: 22px;
+    background: rgba(22, 163, 74, 0.1);
+    border-radius: 50%;
+    text-align: center;
+    line-height: 22px;
+    font-size: 12px;
+  }
+
+  /* ============ NAVIGATION BUTTONS ============ */
+  .nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin: 40px 0 20px;
+    padding-top: 24px;
+    border-top: 2px solid var(--border);
+  }
+
+  .nav-btn {
+    padding: 14px 26px;
+    background: white;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    color: var(--text-dark);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s;
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+  .nav-btn:hover {
+    border-color: var(--vtb-darkblue);
+    color: var(--vtb-darkblue);
+    transform: translateY(-2px);
+  }
+
+  .nav-btn.next {
+    background: var(--vtb-darkblue);
+    color: white;
+    border-color: var(--vtb-darkblue);
+  }
+
+  .nav-btn.next:hover {
+    background: var(--vtb-blue);
+    border-color: var(--vtb-blue);
+    color: white;
+  }
+
+  /* ============ MODULE SECTIONS ============ */
+  .module-section { display: none; }
+  .module-section.active { display: block; animation: fadeIn 0.4s ease; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ============ DIAGRAM ============ */
+  .ai-flow {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr;
+    gap: 12px;
+    align-items: center;
+    margin: 24px 0;
+  }
+
+  .flow-box {
+    background: white;
+    padding: 20px 14px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+    border-top: 3px solid var(--vtb-blue);
+  }
+
+  .flow-box .icon {
+    font-size: 32px;
+    margin-bottom: 8px;
+  }
+
+  .flow-box h5 {
+    font-size: 14px;
+    color: var(--text-dark);
+    margin-bottom: 4px;
+  }
+
+  .flow-box p {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  .flow-arrow {
+    font-size: 28px;
+    color: var(--vtb-red);
+    font-weight: 700;
+  }
+
+  /* ============ FORMULA CARD ============ */
+  .formula {
+    background: linear-gradient(135deg, var(--vtb-darkblue), var(--vtb-blue));
+    color: white;
+    padding: 24px;
+    border-radius: 14px;
+    margin: 20px 0;
+    text-align: center;
+  }
+
+  .formula .title {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    opacity: 0.85;
+    margin-bottom: 12px;
+  }
+
+  .formula .equation {
+    font-size: 22px;
+    font-weight: 700;
+    font-family: 'Consolas', monospace;
+    background: rgba(255,255,255,0.15);
+    padding: 14px 20px;
+    border-radius: 10px;
+    display: inline-block;
+  }
+
+  /* ============ SIGNATURE ============ */
+  .author-signature {
+    position: fixed;
+    bottom: 14px;
+    right: 14px;
+    background: rgba(90, 100, 120, 0.75);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 500;
+    z-index: 999;
+    letter-spacing: 0.3px;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+  }
+
+  .author-signature:hover {
+    opacity: 1;
+  }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 968px) {
+    .layout { grid-template-columns: 1fr; }
+    .sidebar {
+      position: static;
+      height: auto;
+      border-right: none;
+      border-bottom: 1px solid var(--border);
+    }
+    .content { padding: 24px; }
+    .module-header h1 { font-size: 26px; }
+    .lesson { padding: 20px; }
+    .lesson h2 { font-size: 22px; }
+    .comparison { grid-template-columns: 1fr; }
+    .ai-flow { grid-template-columns: 1fr; }
+    .flow-arrow { transform: rotate(90deg); }
+    .header-wrap { flex-direction: column; gap: 10px; }
+    .progress-info { display: none; }
+    .author-signature {
+      bottom: 10px;
+      right: 10px;
+      font-size: 10px;
+      padding: 4px 10px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header>
+  <div class="header-wrap">
+    <div class="logo">
+      <div class="logo-icon">AI</div>
+      <span>Học Viện AI - Bài Học Tương Tác</span>
+    </div>
+    <div class="header-actions">
+      <div class="progress-info">📊 Tiến độ: <span id="progress">0/8</span> module</div>
+      <a href="landing-page-AI-co-ban.html" class="btn-back">← Về Trang Chủ</a>
+    </div>
+  </div>
+</header>
+
+<div class="layout">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="sidebar">
+    <h3>📚 Lộ Trình Học</h3>
+    <ul class="module-nav" id="moduleNav">
+      <li class="module-nav-item active" data-module="1"><a href="#" onclick="showModule(1); return false;"><span class="module-nav-num">1</span>Nhập Môn AI</a></li>
+      <li class="module-nav-item" data-module="2"><a href="#" onclick="showModule(2); return false;"><span class="module-nav-num">2</span>Làm Quen Công Cụ AI</a></li>
+      <li class="module-nav-item" data-module="3"><a href="#" onclick="showModule(3); return false;"><span class="module-nav-num">3</span>Nghệ Thuật Prompt</a></li>
+      <li class="module-nav-item" data-module="4"><a href="#" onclick="showModule(4); return false;"><span class="module-nav-num">4</span>Soạn Thảo & Email</a></li>
+      <li class="module-nav-item" data-module="5"><a href="#" onclick="showModule(5); return false;"><span class="module-nav-num">5</span>Phân Tích Dữ Liệu</a></li>
+      <li class="module-nav-item" data-module="6"><a href="#" onclick="showModule(6); return false;"><span class="module-nav-num">6</span>Hình Ảnh & Slide</a></li>
+      <li class="module-nav-item" data-module="7"><a href="#" onclick="showModule(7); return false;"><span class="module-nav-num">7</span>AI Theo Ngành</a></li>
+      <li class="module-nav-item" data-module="8"><a href="#" onclick="showModule(8); return false;"><span class="module-nav-num">8</span>An Toàn & Đạo Đức</a></li>
+    </ul>
+  </aside>
+
+  <!-- ============ MAIN CONTENT ============ -->
+  <main class="content">
+
+    <!-- ===== MODULE 1 ===== -->
+    <section class="module-section active" id="module-1">
+      <div class="module-header">
+        <span class="module-tag">Module 1</span>
+        <h1>Nhập Môn AI - AI Là Gì Thật Sự?</h1>
+        <div class="module-meta">
+          <span>⏱ 2 giờ học</span>
+          <span>📚 3 bài</span>
+          <span>🎯 Cấp độ: Cơ bản</span>
+        </div>
+      </div>
+
+      <!-- Bài 1.1 -->
+      <div class="lesson">
+        <span class="lesson-num">Bài 1.1</span>
+        <h2>AI Không Phải Là Phép Màu</h2>
+        <p>Hãy quên đi hình ảnh robot trong phim Hollywood. AI thực ra là <strong>một chương trình máy tính học từ dữ liệu</strong> để nhận diện mẫu (pattern) và đưa ra dự đoán.</p>
+
+        <div class="analogy">
+          <strong>💡 Ví dụ dễ hiểu</strong>
+          Hãy tưởng tượng bạn dạy một đứa trẻ phân biệt mèo và chó. Bạn cho bé xem 1.000 ảnh mèo và 1.000 ảnh chó. Sau đó, bé nhìn ảnh mới là biết ngay đó là con gì. AI hoạt động tương tự - chỉ khác là nó "xem" hàng tỷ ví dụ và học cực nhanh.
+        </div>
+
+        <h3>3 Loại AI Phổ Biến Hiện Nay</h3>
+        <div class="ai-flow">
+          <div class="flow-box">
+            <div class="icon">📊</div>
+            <h5>AI Phân Loại</h5>
+            <p>Lọc spam email, phân loại nợ xấu</p>
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box">
+            <div class="icon">💬</div>
+            <h5>AI Sinh Ngôn Ngữ</h5>
+            <p>ChatGPT, Claude, Gemini</p>
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box">
+            <div class="icon">🎨</div>
+            <h5>AI Tạo Hình Ảnh</h5>
+            <p>Midjourney, DALL-E</p>
+          </div>
+        </div>
+
+        <div class="key-points">
+          <h4>🎯 Điểm Cốt Lõi Cần Nhớ</h4>
+          <ul>
+            <li>AI <strong>không thông minh</strong> theo nghĩa con người - nó chỉ giỏi nhận diện mẫu</li>
+            <li>AI cần <strong>dữ liệu khổng lồ</strong> để học - càng nhiều dữ liệu càng chính xác</li>
+            <li>AI <strong>có thể sai</strong> - đặc biệt với những thứ chưa từng thấy</li>
+            <li>AI là <strong>công cụ hỗ trợ</strong>, không thay thế hoàn toàn con người</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Bài 1.2 -->
+      <div class="lesson">
+        <span class="lesson-num">Bài 1.2</span>
+        <h2>Cách AI "Suy Nghĩ" - Bí Mật Đằng Sau ChatGPT</h2>
+        <p>ChatGPT, Claude và Gemini về bản chất là <strong>"máy đoán từ tiếp theo"</strong> cực kỳ thông minh. Nó nhìn vào câu bạn gõ rồi dự đoán từ tiếp theo có khả năng cao nhất xuất hiện.</p>
+
+        <div class="illustration">
+          <h4>🔬 AI Hoàn Thành Câu Như Thế Nào?</h4>
+          <p>Bạn gõ: <strong>"Hôm nay trời rất..."</strong></p>
+          <p>AI phân tích: "Trong hàng tỷ câu đã đọc, sau cụm này thường xuất hiện..."</p>
+          <ul>
+            <li>"đẹp" (xác suất 35%) ✓ chọn từ này</li>
+            <li>"nóng" (xác suất 28%)</li>
+            <li>"lạnh" (xác suất 15%)</li>
+            <li>"mưa" (xác suất 12%)</li>
+          </ul>
+          <p>→ AI trả lời: "Hôm nay trời rất <strong>đẹp</strong>"</p>
+        </div>
+
+        <h3>Vì Sao AI Có Thể Trả Lời Hàng Triệu Câu Hỏi?</h3>
+        <p>Vì nó đã được "đào tạo" trên hàng tỷ trang web, sách báo, code, đối thoại. Khi bạn hỏi "Cách phân tích BCTC?", nó đã từng đọc hàng triệu tài liệu liên quan và "lắp ghép" câu trả lời phù hợp nhất.</p>
+
+        <div class="analogy">
+          <strong>📖 Ví dụ thực tế</strong>
+          Giống như một người đã đọc 10 triệu cuốn sách - khi bạn hỏi bất cứ chủ đề gì, họ đều có thể nói chuyện được. Nhưng họ không "hiểu" sâu như chuyên gia thật - chỉ là tổng hợp lại những gì đã đọc.
+        </div>
+
+        <div class="quiz" data-quiz-id="q1-2">
+          <h4>🧠 Kiểm Tra Hiểu Bài</h4>
+          <p class="quiz-question">ChatGPT trả lời câu hỏi của bạn dựa trên cơ chế nào?</p>
+          <ul class="quiz-options">
+            <li><label class="quiz-option" data-correct="false"><input type="radio" name="q1-2"> Nó tra cứu Google rồi tổng hợp</label></li>
+            <li><label class="quiz-option" data-correct="true"><input type="radio" name="q1-2"> Nó dự đoán từ tiếp theo dựa trên dữ liệu đã học</label></li>
+            <li><label class="quiz-option" data-correct="false"><input type="radio" name="q1-2"> Nó hỏi một AI khác rồi trả lời lại</label></li>
+            <li><label class="quiz-option" data-correct="false"><input type="radio" name="q1-2"> Nó thực sự hiểu và suy nghĩ như con người</label></li>
+          </ul>
+          <div class="quiz-result"></div>
+        </div>
+      </div>
+
+      <!-- Bài 1.3 -->
+      <div class="lesson">
+        <span class="lesson-num">Bài 1.3</span>
+        <h2>Giới Hạn Của AI - Đừng Tin Nó 100%</h2>
+        <p>AI rất giỏi, nhưng nó cũng có những điểm yếu nghiêm trọng. Hiểu rõ giới hạn giúp bạn dùng AI an toàn và hiệu quả.</p>
+
+        <h3>4 Giới Hạn Quan Trọng</h3>
+
+        <div class="comparison">
+          <div class="comp-col comp-bad">
+            <h5>❌ AI Hay "Bịa" (Hallucination)</h5>
+            <p>Khi không biết, AI vẫn trả lời tự tin và đôi khi tự bịa ra số liệu, tên người, sự kiện không có thật.</p>
+          </div>
+          <div class="comp-col comp-good">
+            <h5>✅ Cách Khắc Phục</h5>
+            <p>Luôn kiểm chứng số liệu, tên riêng, ngày tháng từ AI bằng nguồn chính thức trước khi sử dụng.</p>
+          </div>
+        </div>
+
+        <div class="comparison">
+          <div class="comp-col comp-bad">
+            <h5>❌ Không Cập Nhật Thời Gian Thực</h5>
+            <p>AI chỉ biết đến thời điểm "training cutoff". Tin tức mới, giá cả hôm nay, sự kiện gần đây - AI không biết.</p>
+          </div>
+          <div class="comp-col comp-good">
+            <h5>✅ Cách Khắc Phục</h5>
+            <p>Dùng tính năng "Web Search" tích hợp hoặc cung cấp thông tin mới qua prompt cho AI xử lý.</p>
+          </div>
+        </div>
+
+        <div class="comparison">
+          <div class="comp-col comp-bad">
+            <h5>❌ Yếu Toán Phức Tạp</h5>
+            <p>AI có thể tính sai phép tính nhiều bước, đặc biệt với số thập phân, ma trận, xác suất.</p>
+          </div>
+          <div class="comp-col comp-good">
+            <h5>✅ Cách Khắc Phục</h5>
+            <p>Dùng AI để hiểu cách giải, nhưng tính toán cuối cùng nên kiểm tra bằng Excel hoặc máy tính.</p>
+          </div>
+        </div>
+
+        <div class="comparison">
+          <div class="comp-col comp-bad">
+            <h5>❌ Có Thể Bị "Định Hướng Sai"</h5>
+            <p>Do học từ dữ liệu Internet, AI có thể mang định kiến, thông tin sai lệch từ nguồn không đáng tin cậy.</p>
+          </div>
+          <div class="comp-col comp-good">
+            <h5>✅ Cách Khắc Phục</h5>
+            <p>Đặt câu hỏi từ nhiều góc độ, yêu cầu AI giải thích lý do, đối chiếu với chuyên gia khi cần.</p>
+          </div>
+        </div>
+
+        <div class="key-points">
+          <h4>🎯 Quy Tắc Vàng Khi Dùng AI</h4>
+          <ul>
+            <li><strong>Tin nhưng phải kiểm chứng</strong> - đặc biệt là số liệu, luật pháp, y tế</li>
+            <li><strong>AI là trợ lý, bạn là người ra quyết định</strong> cuối cùng</li>
+            <li><strong>Đừng đưa thông tin nhạy cảm</strong> vào AI miễn phí (CMND, tài khoản, mật khẩu)</li>
+            <li><strong>Học cách đặt câu hỏi tốt</strong> - kết quả phụ thuộc 80% vào prompt</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="nav-btn" disabled style="opacity: 0.4;">← Bài Trước</button>
+        <button class="nav-btn next" onclick="showModule(2)">Bài Tiếp Theo: Làm Quen Công Cụ AI →</button>
+      </div>
+    </section>
+
+    <!-- ===== MODULE 2 ===== -->
+    <section class="module-section" id="module-2">
+      <div class="module-header">
+        <span class="module-tag">Module 2</span>
+        <h1>Làm Quen ChatGPT, Claude, Gemini</h1>
+        <div class="module-meta">
+          <span>⏱ 2.5 giờ học</span>
+          <span>📚 4 bài</span>
+          <span>🎯 Cấp độ: Cơ bản</span>
+        </div>
+      </div>
+
+      <div class="lesson">
+        <span class="lesson-num">Bài 2.1</span>
+        <h2>So Sánh 3 Ông Lớn AI - Chọn Cái Nào?</h2>
+        <p>Mỗi công cụ có thế mạnh riêng. Hiểu để chọn đúng việc nào dùng cái nào.</p>
+
+        <h3>🤖 ChatGPT (OpenAI)</h3>
+        <ul>
+          <li><strong>Mạnh nhất:</strong> Sáng tạo nội dung, viết văn, code, tạo ảnh DALL-E</li>
+          <li><strong>Phù hợp:</strong> Marketing, content creator, lập trình viên</li>
+          <li><strong>Giá:</strong> Miễn phí (giới hạn) / Plus 20 USD/tháng</li>
+          <li><strong>Đặc điểm:</strong> Phổ biến nhất, có nhiều plugin và GPT tùy chỉnh</li>
+        </ul>
+
+        <h3>🧠 Claude (Anthropic)</h3>
+        <ul>
+          <li><strong>Mạnh nhất:</strong> Phân tích văn bản dài, viết chuyên nghiệp, an toàn</li>
+          <li><strong>Phù hợp:</strong> Ngân hàng, pháp lý, học thuật, nghiên cứu</li>
+          <li><strong>Giá:</strong> Miễn phí / Pro 20 USD/tháng</li>
+          <li><strong>Đặc điểm:</strong> Đọc được file lớn (200K từ), trả lời chi tiết, ít "bịa"</li>
+        </ul>
+
+        <h3>💎 Gemini (Google)</h3>
+        <ul>
+          <li><strong>Mạnh nhất:</strong> Tích hợp Google (Drive, Gmail, Search), đa phương tiện</li>
+          <li><strong>Phù hợp:</strong> Người dùng hệ sinh thái Google, nghiên cứu thông tin mới</li>
+          <li><strong>Giá:</strong> Miễn phí / Advanced 20 USD/tháng</li>
+          <li><strong>Đặc điểm:</strong> Cập nhật tin tức real-time, tốt cho video YouTube</li>
+        </ul>
+
+        <div class="illustration">
+          <h4>🎯 Khuyến Nghị Cho Người Đi Làm Việt Nam</h4>
+          <p><strong>Nếu mới bắt đầu:</strong> ChatGPT bản miễn phí - dễ dùng, nhiều hướng dẫn tiếng Việt.</p>
+          <p><strong>Làm tài chính/ngân hàng:</strong> Claude - phân tích BCTC, soạn tờ trình rất tốt.</p>
+          <p><strong>Cần thông tin mới:</strong> Gemini - kết nối với Google Search trực tiếp.</p>
+          <p><strong>Lý tưởng:</strong> Dùng cả 3 song song, mỗi việc dùng công cụ phù hợp.</p>
+        </div>
+      </div>
+
+      <div class="lesson">
+        <span class="lesson-num">Bài 2.2</span>
+        <h2>Hướng Dẫn Đăng Ký & Sử Dụng Lần Đầu</h2>
+        <p>Cùng đăng ký ChatGPT - công cụ phổ biến nhất - chỉ trong 5 phút.</p>
+
+        <h3>📝 Quy Trình 5 Bước</h3>
+        <ol>
+          <li><strong>Truy cập:</strong> chat.openai.com (chính thức của OpenAI)</li>
+          <li><strong>Sign up:</strong> Bằng email Google, Microsoft hoặc email cá nhân</li>
+          <li><strong>Xác thực:</strong> Nhập số điện thoại để nhận OTP (chống bot)</li>
+          <li><strong>Hoàn tất:</strong> Điền tên, ngày sinh - thế là xong!</li>
+          <li><strong>Bắt đầu chat:</strong> Gõ câu hỏi đầu tiên vào ô chat</li>
+        </ol>
+
+        <div class="analogy">
+          <strong>⚠️ Lưu ý quan trọng</strong>
+          Tại Việt Nam, một số mạng có thể gặp lỗi đăng ký. Nếu báo "Not available in your country", thử dùng VPN hoặc đăng ký bằng email công ty/quốc tế. Sau khi tạo tài khoản xong thì dùng bình thường không cần VPN nữa.
+        </div>
+
+        <div class="prompt-box">
+          <div class="prompt-header">
+            <span class="prompt-label">📋 PROMPT THỬ ĐẦU TIÊN</span>
+            <button class="copy-btn" onclick="copyPrompt(this)">📋 Sao chép</button>
+          </div>
+          <div class="prompt-content">Xin chào! Tôi là người mới bắt đầu dùng AI. Hãy giới thiệu về bạn và 5 việc bạn có thể giúp tôi trong công việc văn phòng hàng ngày. Trả lời bằng tiếng Việt, ngắn gọn dễ hiểu.</div>
+        </div>
+      </div>
+
+      <div class="lesson">
+        <span class="lesson-num">Bài 2.3</span>
+        <h2>Khi Nào Nên Trả Phí?</h2>
+        <p>Bản miễn phí đã rất mạnh, nhưng có vài lý do để nâng cấp lên trả phí:</p>
+
+        <div class="comparison">
+          <div class="comp-col comp-good">
+            <h5>✅ Bản Miễn Phí Đủ Dùng Khi</h5>
+            <p>• Hỏi đáp thông thường<br>• Viết email, văn bản ngắn<br>• Học hỏi kiến thức<br>• Sử dụng < 20 lần/ngày</p>
+          </div>
+          <div class="comp-col comp-good" style="background: rgba(0, 89, 147, 0.05); border-color: var(--vtb-darkblue);">
+            <h5 style="color: var(--vtb-darkblue);">⭐ Nên Trả Phí Khi</h5>
+            <p>• Xử lý file lớn (Excel, PDF)<br>• Sử dụng AI hàng ngày, hàng giờ<br>• Cần model mạnh nhất (GPT-4, Claude Opus)<br>• Tạo ảnh chất lượng cao</p>
+          </div>
+        </div>
+
+        <div class="key-points">
+          <h4>💰 Tip Tiết Kiệm</h4>
+          <ul>
+            <li>Dùng <strong>chia sẻ tài khoản</strong> với 2-3 đồng nghiệp (tiết kiệm 70%)</li>
+            <li>So sánh giá: <strong>ChatGPT, Claude, Gemini đều 20 USD/tháng</strong></li>
+            <li>Có <strong>tháng dùng thử miễn phí</strong> ở một số dịch vụ</li>
+            <li>Trả theo năm thường giảm 15-20%</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="nav-btn" onclick="showModule(1)">← Module Trước</button>
+        <button class="nav-btn next" onclick="showModule(3)">Module Tiếp Theo: Nghệ Thuật Prompt →</button>
+      </div>
+    </section>
+
+    <!-- ===== MODULE 3 ===== -->
+    <section class="module-section" id="module-3">
+      <div class="module-header">
+        <span class="module-tag">Module 3</span>
+        <h1>Nghệ Thuật Ra Lệnh - Prompt Engineering</h1>
+        <div class="module-meta">
+          <span>⏱ 4 giờ học</span>
+          <span>📚 6 bài</span>
+          <span>🎯 Cấp độ: Trung cấp</span>
+        </div>
+      </div>
+
+      <div class="lesson">
+        <span class="lesson-num">Bài 3.1</span>
+        <h2>Công Thức Vàng Của Prompt Hiệu Quả</h2>
+        <p>80% kết quả phụ thuộc vào cách bạn ra lệnh. Đây là công thức 5 thành phần đã được chứng minh hiệu quả.</p>
+
+        <div class="formula">
+          <div class="title">Công Thức RACEF</div>
+          <div class="equation">ROLE + ACTION + CONTEXT + EXAMPLE + FORMAT</div>
+        </div>
+
+        <h3>Giải Thích Từng Thành Phần</h3>
+        <ul>
+          <li><strong>R - Role (Vai trò):</strong> Bảo AI đóng vai gì. VD: "Bạn là chuyên gia phân tích tín dụng có 20 năm kinh nghiệm"</li>
+          <li><strong>A - Action (Hành động):</strong> Việc cần làm. VD: "Hãy phân tích BCTC sau"</li>
+          <li><strong>C - Context (Bối cảnh):</strong> Thông tin nền. VD: "Doanh nghiệp này hoạt động trong ngành xây dựng, đang xin vay 10 tỷ"</li>
+          <li><strong>E - Example (Ví dụ):</strong> Mẫu kết quả mong muốn. VD: "Trình bày như báo cáo thẩm định ngân hàng"</li>
+          <li><strong>F - Format (Định dạng):</strong> Bảng, danh sách, đoạn văn. VD: "Trả lời dạng bảng + 3 đoạn nhận xét"</li>
+        </ul>
+
+        <div class="comparison">
+          <div class="comp-col comp-bad">
+            <h5>❌ Prompt Tồi</h5>
+            <p>"Phân tích báo cáo tài chính này"</p>
+          </div>
+          <div class="comp-col comp-good">
+            <h5>✅ Prompt Tốt</h5>
+            <p>"Bạn là chuyên gia tín dụng VietinBank. Phân tích BCTC dưới đây của Cty ABC (ngành xây dựng, doanh thu 50 tỷ/năm) đang xin vay 10 tỷ. Trả lời theo format: (1) Bảng chỉ số tài chính chính, (2) Nhận xét xu hướng 3 năm, (3) Khuyến nghị có cho vay không + lý do."</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="lesson">
+        <span class="lesson-num">Bài 3.2</span>
+        <h2>5 Kỹ Thuật Prompt Pro</h2>
+
+        <h3>1️⃣ Few-Shot Prompting (Cho Ví Dụ)</h3>
+        <p>Đưa cho AI vài ví dụ về kết quả mong muốn để nó học theo phong cách.</p>
+        <div class="prompt-box">
+          <div class="prompt-header">
+            <span class="prompt-label">📋 VÍ DỤ FEW-SHOT</span>
+            <button class="copy-btn" onclick="copyPrompt(this)">📋 Sao chép</button>
+          </div>
+          <div class="prompt-content">Hãy viết tiêu đề bài đăng Facebook theo phong cách sau:
+
+VÍ DỤ 1: "5 sai lầm khiến bạn không bao giờ giàu được - số 3 ai cũng mắc!"
+VÍ DỤ 2: "Tôi đã tiết kiệm 50 triệu/năm chỉ nhờ 1 thay đổi nhỏ này..."
+
+BÂY GIỜ HÃY VIẾT 5 TIÊU ĐỀ TƯƠNG TỰ về chủ đề: Vay vốn ngân hàng cho doanh nghiệp nhỏ.</div>
+        </div>
+
+        <h3>2️⃣ Chain-of-Thought (Bảo AI Suy Nghĩ Từng Bước)</h3>
+        <p>Khi gặp vấn đề phức tạp, bảo AI suy luận từng bước - kết quả chính xác hơn rõ rệt.</p>
+        <div class="prompt-box">
+          <div class="prompt-header">
+            <span class="prompt-label">📋 CHAIN-OF-THOUGHT</span>
+            <button class="copy-btn" onclick="copyPrompt(this)">📋 Sao chép</button>
+          </div>
+          <div class="prompt-content">Tính khả năng vay 10 tỷ trong 5 năm với lãi suất 9%/năm.
+Hãy SUY NGHĨ TỪNG BƯỚC:
+1. Tính tổng lãi phải trả
+2. Tính số tiền trả hàng tháng (gốc + lãi)
+3. So sánh với khả năng dòng tiền doanh nghiệp 2 tỷ/năm
+4. Kết luận: vay có khả thi không và đề xuất phương án</div>
+        </div>
+
+        <h3>3️⃣ Role Playing (Giao Vai Cho AI)</h3>
+        <p>Cho AI đóng vai chuyên gia cụ thể - nó sẽ trả lời sâu hơn, chuyên nghiệp hơn.</p>
+        <div class="prompt-box">
+          <div class="prompt-header">
+            <span class="prompt-label">📋 ROLE PLAYING</span>
+            <button class="copy-btn" onclick="copyPrompt(this)">📋 Sao chép</button>
+          </div>
+          <div class="prompt-content">Bạn là CFO của doanh nghiệp xây dựng có 200 nhân viên, doanh thu 100 tỷ/năm. Tôi là cán bộ tín dụng đang phỏng vấn bạn để xét duyệt khoản vay. Hãy đặt cho tôi 10 câu hỏi mà CFO thực thụ sẽ hỏi để bảo vệ quyền lợi doanh nghiệp.</div>
+        </div>
+
+        <h3>4️⃣ Self-Critique (Yêu Cầu AI Tự Đánh Giá)</h3>
+        <p>Sau khi AI trả lời, bảo nó tự đánh giá và cải thiện.</p>
+        <div class="prompt-box">
+          <div class="prompt-header">
+            <span class="prompt-label">📋 SELF-CRITIQUE</span>
+            <button class="copy-btn" onclick="copyPrompt(this)">📋 Sao chép</button>
+          </div>
+          <div class="prompt-content">[Sau khi AI trả lời câu hỏi đầu]
+
+Hãy đánh giá lại câu trả lời trên của bạn:
+- Có thiếu sót gì không?
+- Có điểm nào chưa chính xác?
+- Có cách nào trình bày tốt hơn?
+
+Sau đó hãy đưa ra phiên bản hoàn thiện hơn.</div>
+        </div>
+
+        <h3>5️⃣ Structured Output (Yêu Cầu Định Dạng)</h3>
+        <p>Yêu cầu AI trả lời theo cấu trúc cụ thể (JSON, bảng, markdown) để dễ xử lý sau.</p>
+        <div class="prompt-box">
+          <div class="prompt-header">
+            <span class="prompt-label">📋 STRUCTURED OUTPUT</span>
+            <button class="copy-btn" onclick="copyPrompt(this)">📋 Sao chép</button>
+          </div>
+          <div class="prompt-content">Phân tích doanh nghiệp ABC và trả lời theo cấu trúc bảng sau:
+
+| Tiêu chí | Đánh giá (1-10) | Nhận xét |
+|----------|-----------------|----------|
+| Sức khỏe tài chính | | |
+| Khả năng trả nợ | | |
+| Tiềm năng tăng trưởng | | |
+| Rủi ro thị trường | | |
+
+Sau bảng, viết 3 đoạn:
+1. Điểm mạnh nổi bật
+2. Rủi ro cần chú ý
+3. Khuyến nghị cho NH</div>
+        </div>
+      </div>
+
+      <div class="lesson">
+        <span class="lesson-num">Bài 3.3 - Thực Hành</span>
+        <h2>🎯 Bài Tập Tương Tác - Viết Prompt Cho Riêng Bạn</h2>
+        <p>Hãy thử áp dụng công thức RACEF để viết một prompt cho công việc của bạn:</p>
+
+        <div class="try-it">
+          <h4>✍️ Bài Tập: Viết Prompt Soạn Email</h4>
+          <p>Tình huống: <strong>Bạn cần soạn email gửi khách hàng doanh nghiệp đề xuất gói vay 5 tỷ.</strong></p>
+          <p>Hãy viết prompt theo công thức RACEF (Role - Action - Context - Example - Format):</p>
+          <textarea placeholder="Ví dụ bắt đầu: 'Bạn là chuyên viên tín dụng có 10 năm kinh nghiệm...'"></textarea>
+          <button class="try-btn" onclick="evaluatePrompt(this)">🔍 Kiểm Tra Prompt Của Tôi</button>
+          <div class="feedback"></div>
+        </div>
+
+        <div class="quiz" data-quiz-id="q3-3">
+          <h4>🧠 Quiz: Bạn Là Master Prompt?</h4>
+          <p class="quiz-question">Đâu là yếu tố QUAN TRỌNG NHẤT khi viết prompt?</p>
+          <ul class="quiz-options">
+            <li><label class="quiz-option" data-correct="false"><input type="radio" name="q3-3"> Viết càng dài càng tốt</label></li>
+            <li><label class="quiz-option" data-correct="false"><input type="radio" name="q3-3"> Dùng từ ngữ phức tạp, chuyên ngành</label></li>
+            <li><label class="quiz-option" data-correct="true"><input type="radio" name="q3-3"> Cụ thể, rõ ràng và có ngữ cảnh đầy đủ</label></li>
+            <li><label class="quiz-option" data-correct="false"><input type="radio" name="q3-3"> Viết bằng tiếng Anh để AI hiểu hơn</label></li>
+          </ul>
+          <div class="quiz-result"></div>
+        </div>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="nav-btn" onclick="showModule(2)">← Module Trước</button>
+        <button class="nav-btn next" onclick="showModule(4)">Module Tiếp Theo: Soạn Thảo & Email →</button>
+      </div>
+    </section>
+
+    <!-- ===== MODULE 4 ===== -->
+    <section class="module-section" id="module-4">
+      <div class="module-header">
+        <span class="module-tag">Module 4</span>
+        <h1>AI Trong Soạn Thảo & Giao Tiếp Hàng Ngày</h1>
+        <div class="module-meta">
+          <span>⏱ 3 giờ học</span>
+          <span>📚 5 bài</span>
+          <span>🎯 Cấp độ: Thực hành</span>
+        </div>
+      </div>
+
+      <div class="lesson">
+        <span class="lesson-num">Bài 4.1</span>
+        <h2>Soạn Email Chuyên Nghiệp Trong 30 Giây</h2>
+        <p>Email là công việc tốn thời gian nhất - nhưng cũng là việc AI giúp đỡ tốt nhất.</p>
+
+        <div class="prompt-box">
+          <div class="prompt-header">
+            <span class="prompt-label">📧 PROMPT EMAIL XIN HẸN GẶP KHÁCH HÀNG</span>
+            <button class="copy-btn" onclick="copyPrompt(this)">📋 Sao chép</button>
+          </div>
+          <div class="prompt-content">Bạn là chuyên viên tín dụng VietinBank. Hãy soạn email cho ông Nguyễn Văn A - Giám đốc Cty TNHH ABC, đề xuất buổi gặp mặt tuần sau để giới thiệu gói vay vốn lưu động ưu đãi 8.5%/năm.
+
+YÊU CẦU:
+- Tiêu đề ngắn gọn, hấp dẫn
+- Mở đầu lịch sự, không sáo rỗng
+- Nội dung tập trung lợi ích cho khách hàng
+- Đề xuất 3 khung giờ cụ thể
+- Kết thúc chuyên nghiệp
+- Tối đa 200 từ
+
+Phong cách: Trang trọng nhưng thân thiện, không quá khô cứng.</div>
+        </div>
+
+        <div class="illustration">
+          <h4>💡 Mẹo Tăng Tỷ Lệ Phản Hồi Email Lên 3 Lần</h4>
+          <ul>
+            <li><strong>Tiêu đề có số/cụ thể:</strong> "Gói vay 5 tỷ ưu đãi 8.5%" thay vì "Đề xuất hợp tác"</li>
+            <li><strong>Câu mở đầu nhắc về họ:</strong> "Tôi thấy Cty ABC vừa trúng thầu dự án X..."</li>
+            <li><strong>Đề xuất khung giờ:</strong> Thay vì hỏi chung chung, đưa 2-3 lựa chọn</li>
+            <li><strong>Có deadline ngầm:</strong> "Để kịp tháng này" tạo cảm giác cấp bách</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="lesson">
+        <span class="lesson-num">Bài 4.2</span>
+        <h2>Viết Báo Cáo & Tờ Trình Chuẩn VietinBank</h2>
+
+        <div class="prompt-box">
+          <div class="prompt-header">
+            <span class="prompt-label">📄 PROMPT TỜ TRÌNH CẤP TÍN DỤNG</span>
+            <button class="copy-btn" onclick="copyPrompt(this)">📋 Sao chép</button>
+          </div>
+          <div class="prompt-content">Bạn là chuyên viên thẩm định cấp cao tại VietinBank. Hãy soạn tờ trình cấp tín dụng theo cấu trúc CHUẨN VIETINBANK với các thông tin sau:
+
+KHÁCH HÀNG:
+- Tên: [Điền tên cty]
+- Ngành: [Điền ngành nghề]
+- Doanh thu năm gần nhất: [Điền số]
+- Đề xuất vay: [Điền số tiền + thời hạn + mục đích]
+
+CẤU TRÚC TỜ TRÌNH:
+I. Thông tin khách hàng
+II. Tình hình tài chính 3 năm gần nhất (bảng số liệu)
+III. Mục đích sử dụng vốn vay
+IV. Phân tích rủi ro & biện pháp giảm thiểu
+V. Phương án trả nợ
+VI. Đánh giá tài sản đảm bảo
+VII. Đề xuất cụ thể (lãi suất, kỳ hạn, điều kiện)
+VIII. Kiến nghị
+
+Yêu cầu: Văn phong chính thống ngân hàng, có đủ số liệu, kết luận rõ ràng.</div>
+        </div>
+      </div>
+
+      <div class="lesson">
+        <span class="lesson-num">Bài 4.3</span>
+        <h2>Bài Đăng Mạng Xã Hội Cho Cá Nhân & Doanh Nghiệp</h2>
+
+        <div class="prompt-box">
+          <div class="prompt-header">
+            <span class="prompt-label">📱 PROMPT BÀI ĐĂNG FACEBOOK/LINKEDIN</span>
+            <button class="copy-btn" onclick="copyPrompt(this)">📋 Sao chép</button>
+          </div>
+          <div class="prompt-content">Hãy viết 3 phiên bản bài đăng (Facebook + LinkedIn + Zalo OA) về chủ đề:
+"Gói vay vốn lưu động VietinBank ưu đãi 8.5% cho DN VVN"
+
+YÊU CẦU CHO TỪNG KÊNH:
+
+📘 FACEBOOK (150 từ):
+- Hook mạnh ở đầu
+- 3-4 lợi ích chính (có emoji)
+- CTA rõ ràng
+- 5 hashtag liên quan
+
+💼 LINKEDIN (300 từ):
+- Mở đầu bằng insight thị trường
+- Phân tích chuyên sâu hơn
+- Số liệu thuyết phục
+- Tone chuyên nghiệp
+- Kết thúc kêu gọi thảo luận
+
+💬 ZALO OA (100 từ):
+- Ngắn gọn, dễ đọc trên mobile
+- Có 1 emoji ở đầu
+- Link đăng ký rõ ràng
+- Phù hợp khách hàng VVN Việt Nam</div>
+        </div>
+
+        <div class="try-it">
+          <h4>✍️ Bài Tập Thực Hành</h4>
+          <p>Hãy thử ChatGPT/Claude với prompt trên (thay nội dung phù hợp với việc của bạn). Sau đó:</p>
+          <ol>
+            <li>Đưa prompt vào AI</li>
+            <li>Đọc kết quả</li>
+            <li>Yêu cầu AI điều chỉnh: "Hãy làm câu mở đầu hấp dẫn hơn"</li>
+            <li>Tiếp tục: "Thay từ X bằng Y vì khách hàng của tôi không thích"</li>
+          </ol>
+          <p><strong>Bí quyết:</strong> Đừng bao giờ dùng kết quả đầu tiên. Luôn tinh chỉnh ít nhất 2-3 lần.</p>
+        </div>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="nav-btn" onclick="showModule(3)">← Module Trước</button>
+        <button class="nav-btn next" onclick="showModule(5)">Module Tiếp Theo: Phân Tích Dữ Liệu →</button>
+      </div>
+    </section>
+
+    <!-- ===== MODULE 5 ===== -->
+    <section class="module-section" id="module-5">
+      <div class="module-header">
+        <span class="module-tag">Module 5</span>
+        <h1>AI Phân Tích Dữ Liệu & Báo Cáo</h1>
+        <div class="module-meta">
+          <span>⏱ 3.5 giờ học</span>
+          <span>📚 5 bài</span>
+          <span>🎯 Cấp độ: Trung cấp</span>
+        </div>
+      </div>
+
+      <div class="lesson">
+        <span class="lesson-num">Bài 5.1</span>
+        <h2>Đưa Excel Cho AI Phân Tích Như Thế Nào?</h2>
+        <p>AI có thể đọc file Excel của bạn và rút ra insight quan trọng. Đây là cách làm:</p>
+
+        <h3>3 Phương Pháp</h3>
+        <ol>
+          <li><strong>Upload trực tiếp</strong> (ChatGPT Plus, Claude): Kéo thả file vào chat</li>
+          <li><strong>Copy paste dữ liệu</strong>: Sao chép cột từ Excel rồi paste vào chat</li>
+          <li><strong>Mô tả bằng lời</strong>: Liệt kê số liệu chính bằng văn bản</li>
+        </ol>
+
+        <div class="prompt-box">
+          <div class="prompt-header">
+            <span class="prompt-label">📊 PROMPT PHÂN TÍCH DOANH THU</span>
+            <button class="copy-btn" onclick="copyPrompt(this)">📋 Sao chép</button>
+          </div>
+          <div class="prompt-content">Tôi có dữ liệu doanh thu 12 tháng của doanh nghiệp như sau:
+[Paste dữ liệu Excel vào đây - dạng bảng hoặc CSV]
+
+Bạn là chuyên gia phân tích tài chính. Hãy:
+
+1. NHẬN DIỆN XU HƯỚNG: Tăng/giảm/ổn định? Mùa vụ?
+2. PHÁT HIỆN BẤT THƯỜNG: Tháng nào có biến động lớn? Lý do có thể?
+3. SO SÁNH: Tốc độ tăng trưởng so với cùng kỳ
+4. DỰ BÁO: Nếu xu hướng tiếp tục, doanh thu Q tiếp theo sẽ ra sao?
+5. KHUYẾN NGHỊ: 3 hành động cụ thể nên làm
+
+Trình bày dạng báo cáo có heading, ngắn gọn, có số liệu cụ thể.</div>
+        </div>
+      </div>
+
+      <div class="lesson">
+        <span class="lesson-num">Bài 5.2</span>
+        <h2>Phân Tích BCTC Doanh Nghiệp - Workflow VietinBank</h2>
+
+        <div class="prompt-box">
+          <div class="prompt-header">
+            <span class="prompt-label">💼 PROMPT PHÂN TÍCH BCTC TOÀN DIỆN</span>
+            <button class="copy-btn" onclick="copyPrompt(this)">📋 Sao chép</button>
+          </div>
+          <div class="prompt-content">Bạn là chuyên gia thẩm định tín dụng VietinBank với 15 năm kinh nghiệm. Hãy phân tích BCTC của doanh nghiệp dưới đây và đưa ra đánh giá xếp loại:
+
+[ĐÍNH KÈM/PASTE BCTC]
+
+BẮT BUỘC TÍNH CÁC CHỈ SỐ:
+
+1. THANH KHOẢN:
+- Hệ số thanh toán hiện hành (>=1.2)
+- Hệ số thanh toán nhanh (>=1.0)
+
+2. ĐÒN BẨY:
+- D/E (<3 với VVN)
+- D/A (<0.7)
+
+3. SINH LỢI:
+- ROA (>3%)
+- ROE (>10%)
+- Biên EBITDA (>10%)
+
+4. DÒNG TIỀN:
+- DSCR (>=1.2)
+- Nhu cầu VLĐ
+
+ĐẦU RA YÊU CẦU:
+- Bảng tóm tắt chỉ số (so sánh 3 năm)
+- Phân tích xu hướng
+- Đánh giá xếp loại A/B/C/D/E
+- Khuyến nghị cấp tín dụng (có/không, hạn mức, điều kiện)
+- Cảnh báo rủi ro chính</div>
+        </div>
+
+        <div class="key-points">
+          <h4>⚠️ Lưu Ý Khi Dùng AI Phân Tích BCTC</h4>
+          <ul>
+            <li><strong>Luôn kiểm tra lại số liệu</strong> AI tính - đặc biệt với doanh nghiệp lớn, phức tạp</li>
+            <li><strong>Đừng đưa thông tin nhạy cảm</strong> (CIF, CMND khách hàng) vào AI miễn phí</li>
+            <li>AI chỉ là <strong>cấp 1 của thẩm định</strong> - quyết định cuối vẫn cần con người</li>
+            <li>Kết quả AI nên dùng làm <strong>cơ sở thảo luận</strong> với cấp trên, không phải báo cáo cuối</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="lesson">
+        <span class="lesson-num">Bài 5.3</span>
+        <h2>Tạo Biểu Đồ & Trực Quan Hóa Dữ Liệu</h2>
+        <p>AI có thể vẽ biểu đồ trực tiếp hoặc viết code Excel/Python để bạn dùng.</p>
+
+        <div class="prompt-box">
+          <div class="prompt-header">
+            <span class="prompt-label">📈 PROMPT TẠO BIỂU ĐỒ</span>
+            <button class="copy-btn" onclick="copyPrompt(this)">📋 Sao chép</button>
+          </div>
+          <div class="prompt-content">Tôi có số liệu sau (paste dữ liệu vào đây)
+
+Hãy:
+1. Đề xuất loại biểu đồ phù hợp nhất (cột, tròn, đường, kết hợp)
+2. Vẽ biểu đồ trực tiếp (nếu là Claude/ChatGPT có Code Interpreter)
+3. Viết hướng dẫn từng bước để tự vẽ trong Excel
+4. Đưa ra 3 insight quan trọng nhất từ biểu đồ
+
+Yêu cầu thiết kế biểu đồ:
+- Tiêu đề rõ ràng
+- Màu sắc dễ nhìn (tránh chói)
+- Có chú thích (legend)
+- Có nhãn số liệu trên biểu đồ</div>
+        </div>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="nav-btn" onclick="showModule(4)">← Module Trước</button>
+        <button class="nav-btn next" onclick="showModule(6)">Module Tiếp Theo: Hình Ảnh & Slide →</button>
+      </div>
+    </section>
+
+    <!-- ===== MODULE 6 ===== -->
+    <section class="module-section" id="module-6">
+      <div class="module-header">
+        <span class="module-tag">Module 6</span>
+        <h1>AI Tạo Hình Ảnh, Poster & Slide</h1>
+        <div class="module-meta">
+          <span>⏱ 3 giờ học</span>
+          <span>📚 4 bài</span>
+          <span>🎯 Cấp độ: Sáng tạo</span>
+        </div>
+      </div>
+
+      <div class="lesson">
+        <span class="lesson-num">Bài 6.1</span>
+        <h2>4 Công Cụ Tạo Ảnh AI Phổ Biến</h2>
+
+        <ul>
+          <li><strong>DALL-E 3 (trong ChatGPT):</strong> Dễ dùng, tích hợp sẵn, miễn phí 3 ảnh/ngày</li>
+          <li><strong>Midjourney:</strong> Đẹp nhất, chất lượng nghệ thuật cao - 10 USD/tháng</li>
+          <li><strong>Canva AI:</strong> Tích hợp sẵn vào template - tốt cho marketer không chuyên</li>
+          <li><strong>Leonardo.ai:</strong> Miễn phí, nhiều style - phù hợp người mới</li>
+        </ul>
+
+        <div class="prompt-box">
+          <div class="prompt-header">
+            <span class="prompt-label">🎨 PROMPT TẠO POSTER NGÂN HÀNG</span>
+            <button class="copy-btn" onclick="copyPrompt(this)">📋 Sao chép</button>
+          </div>
+          <div class="prompt-content">Tạo poster quảng bá gói vay vốn lưu động VietinBank với mô tả sau:
+
+CHỦ ĐỀ: Gói vay vốn lưu động cho doanh nghiệp VVN
+LÃI SUẤT: 8.5%/năm
+HẠN MỨC: Lên đến 5 tỷ
+THỜI HẠN: Tối đa 12 tháng
+
+YÊU CẦU THIẾT KẾ:
+- Tỷ lệ: Vertical 1080x1920 (Instagram Story / TikTok)
+- Phong cách: Hiện đại, chuyên nghiệp ngân hàng
+- Màu sắc: Đỏ #D71249 + Xanh đậm #005993 + Trắng (màu VietinBank)
+- Hình ảnh chính: Doanh nhân Việt Nam tự tin, biểu tượng tăng trưởng
+- Có chỗ ghi text rõ ràng
+- Cảm giác: Tin cậy, mạnh mẽ, cơ hội
+
+Output: Mô tả chi tiết để dùng cho Midjourney/DALL-E (bằng tiếng Anh càng tốt)</div>
+        </div>
+      </div>
+
+      <div class="lesson">
+        <span class="lesson-num">Bài 6.2</span>
+        <h2>Tạo Slide Thuyết Trình Tự Động Với Gamma & Tome</h2>
+        <p>Bạn không cần PowerPoint nữa - AI tạo slide hoàn chỉnh trong 2 phút.</p>
+
+        <h3>Các Công Cụ Hàng Đầu</h3>
+        <ul>
+          <li><strong>Gamma.app:</strong> Phổ biến nhất, miễn phí 5 deck đầu - chất lượng cao</li>
+          <li><strong>Tome:</strong> Đẹp, có animation, phù hợp pitch deck</li>
+          <li><strong>Beautiful.ai:</strong> Tự động design đẹp khi gõ nội dung</li>
+          <li><strong>Canva Magic Design:</strong> Tích hợp với template Canva sẵn có</li>
+        </ul>
+
+        <div class="prompt-box">
+          <div class="prompt-header">
+            <span class="prompt-label">📊 PROMPT TẠO PRESENTATION (cho Gamma)</span>
+            <button class="copy-btn" onclick="copyPrompt(this)">📋 Sao chép</button>
+          </div>
+          <div class="prompt-content">Tạo bài thuyết trình 12 slide về:
+
+CHỦ ĐỀ: "Chiến Lược Phát Triển Tín Dụng VVN VietinBank Q2/2026"
+
+ĐỐI TƯỢNG: Ban Giám Đốc Chi Nhánh
+
+CẤU TRÚC:
+Slide 1: Tiêu đề + người trình bày
+Slide 2: Tóm tắt nội dung (Agenda)
+Slide 3: Tổng quan thị trường VVN Việt Nam Q1/2026
+Slide 4: Vị thế VietinBank vs đối thủ
+Slide 5: Số liệu tăng trưởng tín dụng VVN năm qua
+Slide 6: 3 thách thức chính
+Slide 7-9: 3 chiến lược đề xuất (1 slide/chiến lược)
+Slide 10: Kế hoạch triển khai 90 ngày
+Slide 11: Dự kiến KPI & ROI
+Slide 12: Lời cảm ơn + Q&A
+
+PHONG CÁCH:
+- Màu chủ đạo: Đỏ #D71249 + Xanh #005993
+- Mỗi slide ít chữ (max 5 bullet)
+- Có biểu đồ minh họa số liệu
+- Tone chuyên nghiệp, dữ liệu thực tế</div>
+        </div>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="nav-btn" onclick="showModule(5)">← Module Trước</button>
+        <button class="nav-btn next" onclick="showModule(7)">Module Tiếp Theo: AI Theo Ngành →</button>
+      </div>
+    </section>
+
+    <!-- ===== MODULE 7 ===== -->
+    <section class="module-section" id="module-7">
+      <div class="module-header">
+        <span class="module-tag">Module 7</span>
+        <h1>AI Cho Ngành Của Bạn - Case Studies Thực Chiến</h1>
+        <div class="module-meta">
+          <span>⏱ 4 giờ học</span>
+          <span>📚 6 bài</span>
+          <span>🎯 Cấp độ: Chuyên sâu</span>
+        </div>
+      </div>
+
+      <div class="lesson">
+        <span class="lesson-num">Bài 7.1 - Ngân Hàng & Tài Chính</span>
+        <h2>🏦 Workflow AI Cho Cán Bộ Tín Dụng</h2>
+
+        <div class="illustration">
+          <h4>📅 Một Ngày Làm Việc Của Cán Bộ Tín Dụng + AI</h4>
+          <p><strong>8:30 - 9:00:</strong> AI tóm tắt email khách hàng overnight, ưu tiên cái nào trả lời trước</p>
+          <p><strong>9:00 - 11:00:</strong> AI hỗ trợ phân tích BCTC 3 hồ sơ vay (thay vì tự làm 3 tiếng)</p>
+          <p><strong>11:00 - 12:00:</strong> AI soạn 5 tờ trình theo template VietinBank chuẩn</p>
+          <p><strong>14:00 - 15:30:</strong> AI nghiên cứu nhanh 2 ngành (xây dựng + thực phẩm) cho khách hàng tiềm năng</p>
+          <p><strong>15:30 - 17:00:</strong> AI soạn email gửi 10 khách hàng, chuẩn bị tài liệu cho cuộc họp ngày mai</p>
+          <p><strong>Kết quả:</strong> Tiết kiệm 4-5 tiếng/ngày, năng suất tăng gấp đôi</p>
+        </div>
+
+        <div class="prompt-box">
+          <div class="prompt-header">
+            <span class="prompt-label">🏦 BỘ PROMPT NGÀNH NGÂN HÀNG</span>
+            <button class="copy-btn" onclick="copyPrompt(this)">📋 Sao chép</button>
+          </div>
+          <div class="prompt-content">// 1. ĐÁNH GIÁ NHANH KHÁCH HÀNG
+"Đánh giá khách hàng [tên cty], ngành [X], doanh thu [Y] tỷ - có nên tiếp cận chào vay không? Phân tích 3 điểm: cơ hội, rủi ro, sản phẩm phù hợp."
+
+// 2. TÌM KIẾM KHÁCH HÀNG TIỀM NĂNG
+"Liệt kê 10 doanh nghiệp VVN ngành [X] tại [tỉnh/TP] có thể cần vay vốn lưu động trong Q này. Lý do mỗi doanh nghiệp phù hợp."
+
+// 3. CHUẨN BỊ CUỘC GẶP
+"Tôi sắp gặp [tên KH] - GĐ Cty [X]. Hãy chuẩn bị: 5 câu hỏi mở đầu phá băng, 3 chủ đề liên quan ngành của họ, 5 câu hỏi thẩm định khéo léo."
+
+// 4. XỬ LÝ TỪ CHỐI
+"Khách hàng phản hồi: 'Lãi suất bên anh cao hơn các NH khác'. Hãy gợi ý 5 cách phản biện thuyết phục dựa trên giá trị tổng thể VietinBank."
+
+// 5. BÁO CÁO TUẦN
+"Tóm tắt thành báo cáo tuần cho sếp: [paste activity log]. Format: 5 hoạt động chính + 3 kết quả + 2 thách thức + 3 mục tiêu tuần sau."</div>
+        </div>
+      </div>
+
+      <div class="lesson">
+        <span class="lesson-num">Bài 7.2 - Marketing & Sales</span>
+        <h2>📢 Workflow AI Cho Marketing & Sales</h2>
+
+        <div class="prompt-box">
+          <div class="prompt-header">
+            <span class="prompt-label">🎯 BỘ PROMPT MARKETING/SALES</span>
+            <button class="copy-btn" onclick="copyPrompt(this)">📋 Sao chép</button>
+          </div>
+          <div class="prompt-content">// 1. NGHIÊN CỨU ĐỐI THỦ
+"Phân tích 5 đối thủ chính trong ngành [X] tại Việt Nam: điểm mạnh, điểm yếu, chiến lược marketing, gap thị trường có thể khai thác."
+
+// 2. NỘI DUNG MẠNG XÃ HỘI 30 NGÀY
+"Tạo content calendar 30 ngày cho fanpage [tên]. Mục tiêu: [X]. Mỗi ngày 1 bài đăng (Facebook/Zalo). Đa dạng format: tip, case study, hỏi đáp, video, story."
+
+// 3. TỐI ƯU CHIẾN DỊCH QUẢNG CÁO
+"Tôi đang chạy quảng cáo Facebook với CPL = [X] đồng. Mục tiêu giảm xuống [Y]. Hãy đưa ra 10 ý tưởng A/B test cụ thể."
+
+// 4. KỊCH BẢN BÁN HÀNG
+"Viết kịch bản gọi điện 5 phút cho khách hàng tiềm năng quan tâm sản phẩm [X]. Bao gồm: chào, khám phá nhu cầu, giới thiệu, xử lý phản đối, chốt cuộc hẹn."
+
+// 5. PHÂN TÍCH PHẢN HỒI
+"[Paste 50 review/comment khách hàng]
+Hãy phân loại: tích cực, tiêu cực, trung tính. Top 5 điểm khen, top 5 điểm phàn nàn. Đề xuất hành động."</div>
+        </div>
+      </div>
+
+      <div class="lesson">
+        <span class="lesson-num">Bài 7.3 - Nhân Sự & Văn Phòng</span>
+        <h2>👥 Workflow AI Cho HR & Văn Phòng</h2>
+
+        <div class="prompt-box">
+          <div class="prompt-header">
+            <span class="prompt-label">🧑‍💼 BỘ PROMPT HR/VĂN PHÒNG</span>
+            <button class="copy-btn" onclick="copyPrompt(this)">📋 Sao chép</button>
+          </div>
+          <div class="prompt-content">// 1. JOB DESCRIPTION CHUYÊN NGHIỆP
+"Viết JD cho vị trí [X] tại VietinBank, kinh nghiệm [Y] năm. Bao gồm: mô tả công việc, yêu cầu, quyền lợi, quy trình ứng tuyển. Tone: hấp dẫn nhưng chuyên nghiệp."
+
+// 2. SÀNG LỌC CV
+"[Paste 10 CV ứng viên]
+Tôi đang tuyển [X]. Hãy xếp hạng từ 1-10 dựa trên match với JD, lý do từng người. Top 3 nên phỏng vấn."
+
+// 3. CÂU HỎI PHỎNG VẤN
+"Soạn bộ 20 câu phỏng vấn cho vị trí [X]: 5 câu hành vi (STAR), 10 câu chuyên môn, 3 câu tình huống, 2 câu văn hóa công ty."
+
+// 4. ĐÁNH GIÁ HIỆU SUẤT
+"Soạn template đánh giá Q của [vị trí]. Bao gồm: KPI số liệu, năng lực mềm (5 tiêu chí), feedback đa chiều, mục tiêu Q tới."
+
+// 5. VĂN BẢN NỘI BỘ
+"Soạn thông báo nội bộ về [chính sách mới]. Tone: rõ ràng, tích cực, không gây hoang mang. Có FAQ cuối cùng."</div>
+        </div>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="nav-btn" onclick="showModule(6)">← Module Trước</button>
+        <button class="nav-btn next" onclick="showModule(8)">Module Tiếp Theo: An Toàn & Đạo Đức →</button>
+      </div>
+    </section>
+
+    <!-- ===== MODULE 8 ===== -->
+    <section class="module-section" id="module-8">
+      <div class="module-header">
+        <span class="module-tag">Module 8</span>
+        <h1>An Toàn, Đạo Đức & Tương Lai AI</h1>
+        <div class="module-meta">
+          <span>⏱ 2 giờ học</span>
+          <span>📚 4 bài</span>
+          <span>🎯 Cấp độ: Quan trọng</span>
+        </div>
+      </div>
+
+      <div class="lesson">
+        <span class="lesson-num">Bài 8.1</span>
+        <h2>🔒 Bảo Mật Dữ Liệu Khi Dùng AI - Quy Tắc Vàng</h2>
+
+        <div class="comparison">
+          <div class="comp-col comp-bad">
+            <h5>⛔ TUYỆT ĐỐI KHÔNG ĐƯA VÀO AI</h5>
+            <p>• Số CMND/CCCD khách hàng<br>
+            • Số tài khoản, mã PIN<br>
+            • Mật khẩu hệ thống<br>
+            • CIF, mã nội bộ NH<br>
+            • Hợp đồng có chữ ký<br>
+            • Báo cáo nội bộ tuyệt mật<br>
+            • Thông tin nhân viên cá nhân</p>
+          </div>
+          <div class="comp-col comp-good">
+            <h5>✅ AN TOÀN ĐỂ ĐƯA VÀO AI</h5>
+            <p>• Số liệu tổng quát đã ẩn danh<br>
+            • Mẫu báo cáo (không có data thật)<br>
+            • Câu hỏi nghiệp vụ chung<br>
+            • Email mẫu (đã bỏ tên)<br>
+            • Phân tích ngành public<br>
+            • Soạn thảo văn bản template<br>
+            • Học hỏi kiến thức</p>
+          </div>
+        </div>
+
+        <div class="key-points">
+          <h4>🛡️ 5 Quy Tắc Bảo Mật Vàng</h4>
+          <ul>
+            <li><strong>Anonymize trước khi đưa vào AI:</strong> Thay tên thật bằng "Cty X", "ông A"</li>
+            <li><strong>Tắt tính năng training data:</strong> ChatGPT có option "Don't use my data for training"</li>
+            <li><strong>Dùng AI doanh nghiệp:</strong> Microsoft Copilot Enterprise, ChatGPT Team có chính sách bảo mật cao</li>
+            <li><strong>Không dùng wifi công cộng:</strong> Khi xử lý thông tin nhạy cảm</li>
+            <li><strong>Xóa lịch sử chat thường xuyên:</strong> Đặc biệt với chat có thông tin nội bộ</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="lesson">
+        <span class="lesson-num">Bài 8.2</span>
+        <h2>⚖️ Đạo Đức Khi Sử Dụng AI</h2>
+
+        <h3>Nguyên Tắc Cơ Bản</h3>
+        <ul>
+          <li><strong>Minh bạch:</strong> Báo trước khi sử dụng AI viết content quan trọng (báo cáo, học thuật)</li>
+          <li><strong>Không lừa đảo:</strong> Không dùng AI tạo nội dung giả mạo, deepfake, lừa đảo khách hàng</li>
+          <li><strong>Trách nhiệm cá nhân:</strong> Bạn phải kiểm tra và chịu trách nhiệm với output AI</li>
+          <li><strong>Tôn trọng bản quyền:</strong> Ảnh AI tạo có thể trùng tác phẩm thật - cần kiểm tra</li>
+          <li><strong>Không phụ thuộc 100%:</strong> AI là công cụ, đừng để nó thay thế tư duy của bạn</li>
+        </ul>
+
+        <div class="analogy">
+          <strong>🎓 Ví dụ thực tế</strong>
+          Một sinh viên dùng ChatGPT viết toàn bộ luận văn rồi nộp - đó là gian lận học thuật. Nhưng dùng ChatGPT để brainstorm ý tưởng, tóm tắt tài liệu, kiểm tra ngữ pháp - đó là sử dụng đạo đức. Khác biệt nằm ở chỗ: AI hỗ trợ hay AI thay thế?
+        </div>
+      </div>
+
+      <div class="lesson">
+        <span class="lesson-num">Bài 8.3</span>
+        <h2>🚀 Tương Lai AI 2026-2030 - Bạn Cần Chuẩn Bị Gì?</h2>
+
+        <h3>5 Xu Hướng Lớn</h3>
+        <ul>
+          <li><strong>AI Agents (Trí tuệ tự chủ):</strong> AI tự thực hiện chuỗi nhiệm vụ phức tạp - đặt vé, viết email, đàm phán cơ bản</li>
+          <li><strong>Multimodal AI:</strong> AI hiểu cả văn bản, hình ảnh, âm thanh, video cùng lúc</li>
+          <li><strong>Personal AI:</strong> Mỗi người có trợ lý AI cá nhân, hiểu sâu về bạn</li>
+          <li><strong>AI in Banking:</strong> Quy trình tín dụng tự động 80%, chỉ còn các case phức tạp cần con người</li>
+          <li><strong>AI Regulation:</strong> Việt Nam và thế giới sẽ có luật AI rõ ràng hơn</li>
+        </ul>
+
+        <div class="illustration">
+          <h4>🎯 5 Kỹ Năng Cần Có Để Không Bị AI Thay Thế</h4>
+          <ul>
+            <li><strong>Tư duy phản biện:</strong> Đánh giá kết quả AI có chính xác, có ý nghĩa không</li>
+            <li><strong>Kỹ năng giao tiếp con người:</strong> Đàm phán, xây dựng quan hệ, đồng cảm</li>
+            <li><strong>Sáng tạo & Chiến lược:</strong> AI giỏi thực thi, người giỏi định hướng</li>
+            <li><strong>Đạo đức & Trách nhiệm:</strong> Người đưa ra quyết định cuối cùng vẫn cần là con người</li>
+            <li><strong>Học liên tục:</strong> AI thay đổi mỗi 6 tháng - bạn cũng phải vậy</li>
+          </ul>
+        </div>
+
+        <div class="quiz" data-quiz-id="q8-final">
+          <h4>🏆 Quiz Tốt Nghiệp</h4>
+          <p class="quiz-question">Đâu KHÔNG phải là một sử dụng AI có đạo đức?</p>
+          <ul class="quiz-options">
+            <li><label class="quiz-option" data-correct="false"><input type="radio" name="q8-final"> Dùng AI brainstorm ý tưởng cho dự án</label></li>
+            <li><label class="quiz-option" data-correct="false"><input type="radio" name="q8-final"> Dùng AI tóm tắt báo cáo dài</label></li>
+            <li><label class="quiz-option" data-correct="true"><input type="radio" name="q8-final"> Dùng AI tạo email giả danh khách hàng để lừa đảo</label></li>
+            <li><label class="quiz-option" data-correct="false"><input type="radio" name="q8-final"> Dùng AI giúp sửa ngữ pháp văn bản</label></li>
+          </ul>
+          <div class="quiz-result"></div>
+        </div>
+      </div>
+
+      <div class="lesson" style="background: linear-gradient(135deg, var(--vtb-darkblue), var(--vtb-blue)); color: white; text-align: center;">
+        <h2 style="color: white; font-size: 32px;">🎓 Chúc Mừng Bạn Đã Hoàn Thành Khóa Học!</h2>
+        <p style="font-size: 17px; opacity: 0.95;">Bạn đã có nền tảng vững chắc về AI và sẵn sàng áp dụng vào công việc thực tế. Hãy bắt đầu thực hành mỗi ngày - kỹ năng AI sẽ giỏi lên rất nhanh.</p>
+        <div style="margin: 30px 0;">
+          <p style="font-size: 19px; font-weight: 700;">🎯 Hành trình tiếp theo:</p>
+          <p>Tham gia cộng đồng • Nhận chứng chỉ • Workshop chuyên sâu hàng tháng</p>
+        </div>
+        <a href="landing-page-AI-co-ban.html#register" style="display: inline-block; background: var(--vtb-red); color: white; padding: 14px 32px; border-radius: 50px; text-decoration: none; font-weight: 700;">📜 Nhận Chứng Chỉ Hoàn Thành</a>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="nav-btn" onclick="showModule(7)">← Module Trước</button>
+        <a href="landing-page-AI-co-ban.html" class="nav-btn next" style="text-decoration: none; display: inline-block;">🏠 Về Trang Chủ</a>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ============ AUTHOR SIGNATURE ============ -->
+<div class="author-signature">Nguyễn Việt Dũng - BC</div>
+
+<script>
+  let completedModules = new Set();
+
+  function showModule(num) {
+    document.querySelectorAll('.module-section').forEach(s => s.classList.remove('active'));
+    document.getElementById('module-' + num).classList.add('active');
+
+    document.querySelectorAll('.module-nav-item').forEach(item => {
+      item.classList.remove('active');
+      if (parseInt(item.dataset.module) === num) item.classList.add('active');
+    });
+
+    completedModules.add(num);
+    document.getElementById('progress').textContent = completedModules.size + '/8';
+
+    document.querySelectorAll('.module-nav-item').forEach(item => {
+      const m = parseInt(item.dataset.module);
+      if (completedModules.has(m) && m !== num) item.classList.add('completed');
+    });
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function copyPrompt(btn) {
+    const text = btn.parentElement.nextElementSibling.textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = '✓ Đã sao chép';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = '📋 Sao chép';
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  }
+
+  function evaluatePrompt(btn) {
+    const textarea = btn.previousElementSibling;
+    const text = textarea.value.trim();
+    const feedback = btn.nextElementSibling;
+    feedback.classList.add('show');
+
+    if (text.length < 30) {
+      feedback.innerHTML = '<strong>⚠️ Quá ngắn:</strong> Prompt cần đầy đủ thông tin hơn. Hãy thử thêm: vai trò AI đóng, ngữ cảnh cụ thể, kết quả mong muốn.';
+      return;
+    }
+
+    let score = 0;
+    let tips = [];
+
+    if (/bạn là|đóng vai|chuyên gia|chuyên viên/i.test(text)) { score++; } else { tips.push('Thêm Role: "Bạn là chuyên gia tín dụng..."'); }
+    if (/hãy|viết|soạn|phân tích|tạo/i.test(text)) { score++; } else { tips.push('Thêm Action rõ ràng: "Hãy soạn email..."'); }
+    if (text.length > 100) { score++; } else { tips.push('Thêm Context: thông tin về khách hàng, ngành, tình huống'); }
+    if (/format|cấu trúc|theo dạng|bao gồm|gồm/i.test(text)) { score++; } else { tips.push('Thêm Format: "Trình bày dạng bảng + 3 đoạn..."'); }
+    if (/ví dụ|chẳng hạn|như sau/i.test(text) || text.length > 200) { score++; } else { tips.push('Có thể thêm Example để AI hiểu phong cách mong muốn'); }
+
+    let resultHtml = '<strong>📊 Điểm prompt: ' + score + '/5</strong><br><br>';
+    if (score >= 4) {
+      resultHtml += '✅ <strong>Xuất sắc!</strong> Prompt của bạn rất chi tiết và có cấu trúc tốt. AI sẽ cho ra kết quả chất lượng cao.';
+    } else if (score >= 2) {
+      resultHtml += '👍 <strong>Khá tốt!</strong> Prompt có thể cải thiện thêm:<br>';
+      tips.forEach(t => resultHtml += '• ' + t + '<br>');
+    } else {
+      resultHtml += '💡 <strong>Cần bổ sung:</strong><br>';
+      tips.forEach(t => resultHtml += '• ' + t + '<br>');
+    }
+    feedback.innerHTML = resultHtml;
+  }
+
+  // Quiz functionality
+  document.querySelectorAll('.quiz-option').forEach(opt => {
+    opt.addEventListener('click', function() {
+      const quiz = this.closest('.quiz');
+      const allOptions = quiz.querySelectorAll('.quiz-option');
+      allOptions.forEach(o => o.classList.remove('selected', 'correct', 'incorrect'));
+
+      this.classList.add('selected');
+      const isCorrect = this.dataset.correct === 'true';
+
+      setTimeout(() => {
+        allOptions.forEach(o => {
+          if (o.dataset.correct === 'true') o.classList.add('correct');
+        });
+        if (!isCorrect) this.classList.add('incorrect');
+
+        const result = quiz.querySelector('.quiz-result');
+        result.classList.remove('correct', 'incorrect');
+        if (isCorrect) {
+          result.classList.add('correct');
+          result.innerHTML = '🎉 <strong>Chính xác!</strong> Bạn đã hiểu đúng vấn đề. Tiếp tục giữ nhịp học nhé!';
+        } else {
+          result.classList.add('incorrect');
+          result.innerHTML = '❌ <strong>Chưa đúng.</strong> Hãy đọc lại bài và thử lại. Đáp án đúng đã được đánh dấu xanh ở trên.';
+        }
+      }, 300);
+    });
+  });
+</script>
+
+</body>
+</html>
