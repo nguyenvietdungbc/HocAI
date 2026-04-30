@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>AI Thực Chiến | Dành cho cán bộ Ngân hàng</title>
 <style>
 :root{--red:#D71249;--red2:#E21D50;--blue:#005993;--blue2:#007DB7;--lblue:#7ED3F7;--dark:#0A0F1E;--dark2:#0F1829;--card:#132035;--border:rgba(0,89,147,0.28);--text:#E8F0F8;--muted:#8BA8C4;--green:#00C48C;--orange:#F59E0B;}
@@ -39,7 +39,7 @@ body{font-family:Arial,sans-serif;background:var(--dark);color:var(--text);line-
 .sni-n{width:16px;height:16px;border-radius:3px;flex-shrink:0;background:rgba(0,89,147,.3);color:var(--lblue);display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:800;}
 .sni.active .sni-n{background:var(--blue);color:#fff;}
 .sb-foot{padding:11px 16px;border-top:1px solid var(--border);font-size:.64rem;color:var(--muted);margin-top:auto;}
-.main{flex:1;overflow-y:auto;}
+.main{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;}
 .page{display:none;padding:34px 42px 60px;max-width:900px;}
 .page.active{display:block;}
 .ph{margin-bottom:28px;}
@@ -327,8 +327,13 @@ body{font-family:Arial,sans-serif;background:var(--dark);color:var(--text);line-
 .typing span{width:5px;height:5px;border-radius:50%;background:var(--blue2);animation:typ 1.2s infinite;}
 .typing span:nth-child(2){animation-delay:.2s;}.typing span:nth-child(3){animation-delay:.4s;}
 @keyframes typ{0%,60%,100%{transform:translateY(0);}30%{transform:translateY(-5px);}}
-@media(max-width:860px){.sidebar{width:200px;min-width:200px;}.grid2,.grid3,.grid4,.two,.pc,.outcomes{grid-template-columns:1fr;}.page{padding:20px 16px 40px;}}
-@media(max-width:600px){.sidebar{display:none;}.page{padding:16px 12px;}}
+
+
+  .stat{min-width:calc(50% - 6px);}
+  .ph h1{font-size:1.1rem;}
+  .login-card{padding:18px 14px;}
+}
+
 
 /* ── LOGIN ─────────────────────────────────────── */
 #login-overlay{position:fixed;inset:0;z-index:9999;background:linear-gradient(135deg,#080d1a 0%,#0d1830 50%,#0a0f20 100%);display:flex;align-items:center;justify-content:center;}
@@ -431,6 +436,122 @@ body{font-family:Arial,sans-serif;background:var(--dark);color:var(--text);line-
 .reg-note{font-size:.72rem;color:var(--muted);margin-top:10px;text-align:center;line-height:1.6;}
 @media(max-width:600px){.reg-grid{grid-template-columns:1fr;}}
 
+
+/* ════════════════════════════════════
+   MOBILE — iOS & Android
+════════════════════════════════════ */
+/* Topbar cố định */
+#m-top{
+  display:none;position:fixed;top:0;left:0;right:0;height:54px;
+  background:var(--dark2);border-bottom:1px solid var(--border);
+  z-index:9100;align-items:center;justify-content:space-between;
+  padding:0 16px;-webkit-tap-highlight-color:transparent;
+}
+#m-logo{font-size:.95rem;font-weight:800;
+  background:linear-gradient(135deg,var(--red),var(--blue2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+#m-menu-btn{
+  width:42px;height:42px;border-radius:10px;border:1px solid var(--border);
+  background:rgba(215,18,73,.12);color:var(--red);font-size:1.3rem;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+/* Overlay mờ khi mở menu */
+#m-overlay{
+  display:none;position:fixed;inset:0;z-index:9200;
+  background:rgba(0,0,0,.65);-webkit-tap-highlight-color:transparent;
+}
+/* Sidebar thành drawer từ trái */
+@media(max-width:680px){
+  #m-top{display:flex;}
+  #m-overlay.on{display:block;}
+  .app{display:block;padding-top:54px;}
+  .main{width:100%;min-height:calc(100vh - 54px);overflow-y:auto;}
+  .sidebar{
+    position:fixed !important;top:0;left:-290px;height:100% !important;
+    width:280px !important;min-width:280px !important;
+    z-index:9300;transition:left .28s ease;
+    overflow-y:auto;-webkit-overflow-scrolling:touch;
+    box-shadow:6px 0 30px rgba(0,0,0,.5);
+  }
+  .sidebar.on{left:0 !important;}
+  .page{padding:18px 15px 60px !important;max-width:100% !important;}
+
+  /* ── Grids: tất cả về 1 cột ── */
+  .grid2,.grid3,.grid4,.two,.pc,.outcomes,
+  .bonus-grid2,.vid-grid,.reg-grid,
+  .prompt-compare,.session-body-grid{
+    grid-template-columns:1fr !important;
+  }
+  .reg-full{grid-column:1 !important;}
+
+  /* ── Stats: 2 cột ── */
+  .stats{display:grid !important;grid-template-columns:1fr 1fr;gap:10px;}
+  .stat{min-width:0;}
+
+  /* ── Tabs cuộn ngang ── */
+  .ex-tabs,.hw-list~.ex-tabs{
+    display:flex !important;flex-wrap:nowrap !important;
+    overflow-x:auto;-webkit-overflow-scrolling:touch;
+    padding-bottom:6px;gap:6px;scrollbar-width:none;
+  }
+  .ex-tabs::-webkit-scrollbar{display:none;}
+  .ex-tab{white-space:nowrap;flex-shrink:0;}
+  .lab-sc{flex-wrap:wrap !important;}
+
+  /* ── Session header ── */
+  .sh{flex-direction:column;gap:8px;padding:14px 16px;}
+  .sh-num{font-size:1.5rem;}
+
+  /* ── Typography ── */
+  .ph h1{font-size:1.25rem;}
+  .stat-n{font-size:1.3rem;}
+  .bc-title,.card-title{font-size:.86rem;}
+
+  /* ── Buttons ── */
+  .btn-group{flex-direction:column;align-items:stretch;gap:10px;}
+  .btn-main,.btn-sec,.reg-submit{
+    width:100% !important;justify-content:center;
+    font-size:.9rem;padding:13px 18px;
+  }
+
+  /* ── CTA feats ── */
+  .cta-feats{flex-direction:column;align-items:flex-start;gap:8px;}
+
+  /* ── Reg page ── */
+  #p-reg [style*="grid-template-columns:1fr 1fr"]{
+    display:flex !important;flex-direction:column !important;
+  }
+
+  /* ── Tables cuộn ngang ── */
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+
+  /* ── Roadmap ── */
+  .roadmap-row{flex-direction:column;gap:6px;}
+  .rm-day{min-width:0;width:fit-content;}
+
+  /* ── Borrow timeline ── */
+  .tl{padding-left:26px;}
+  .tl::before{left:9px;}
+  .tl-dot{left:-22px;width:16px;height:16px;font-size:.55rem;}
+
+  /* ── Demo chat ── */
+  .bbl{max-width:92%;}
+
+  /* ── Copy button ── */
+  .bc-prompt,.prompt-box,.hw-prompt{padding-right:72px !important;}
+  .copy-btn{font-size:.6rem;padding:3px 8px;}
+
+  /* ── iOS safe area ── */
+  .page{padding-bottom:env(safe-area-inset-bottom, 60px) !important;}
+}
+@media(max-width:400px){
+  .page{padding:14px 12px 60px !important;}
+  .ph h1{font-size:1.1rem;}
+  .stats{grid-template-columns:1fr 1fr;}
+  .stat-n{font-size:1.1rem;}
+}
+
 </style>
 </head>
 <body>
@@ -466,6 +587,15 @@ body{font-family:Arial,sans-serif;background:var(--dark);color:var(--text);line-
   </div>
 </div>
 
+
+<div class="sidebar-overlay" id="mob-overlay" onclick="closeMobNav()"></div>
+
+<!-- MOBILE NAV -->
+<div id="m-top">
+  <div id="m-logo">🤖 AI Thực Chiến</div>
+  <div id="m-menu-btn" onclick="mOpen()" role="button" aria-label="Menu">☰</div>
+</div>
+<div id="m-overlay" onclick="mClose()"></div>
 <div class="app">
 <!-- SIDEBAR -->
 <aside class="sidebar">
@@ -2955,6 +3085,36 @@ function fallbackMailto(ten, nam, sdt, noi, vitri, email, ghi) {
   var subj = encodeURIComponent('🎓 Đăng ký AI Banking - ' + ten);
   window.location.href = 'mailto:nguyenvietdung.bc@gmail.com?subject=' + subj + '&body=' + body;
 }
+</script>
+
+
+
+<script>
+/* ════ MOBILE NAVIGATION ════ */
+function mOpen(){
+  document.querySelector('.sidebar').classList.add('on');
+  document.getElementById('m-overlay').classList.add('on');
+  document.getElementById('m-menu-btn').textContent = '✕';
+  document.body.style.overflow = 'hidden';
+}
+function mClose(){
+  document.querySelector('.sidebar').classList.remove('on');
+  document.getElementById('m-overlay').classList.remove('on');
+  document.getElementById('m-menu-btn').textContent = '☰';
+  document.body.style.overflow = '';
+}
+/* Tự động đóng menu khi chọn trang trên mobile */
+function mNav(fn){ fn(); if(window.innerWidth<=680){ mClose(); window.scrollTo(0,0); } }
+
+/* Override go() và gs() để tự đóng menu trên mobile */
+var _go = go, _gs = gs;
+go = function(id){ _go(id); if(window.innerWidth<=680){ mClose(); setTimeout(function(){window.scrollTo(0,0);},50); } };
+gs = function(n){  _gs(n);  if(window.innerWidth<=680){ mClose(); setTimeout(function(){window.scrollTo(0,0);},50); } };
+
+/* Gán lại onclick cho tất cả nav items để dùng go() mới */
+document.addEventListener('DOMContentLoaded', function(){
+  /* không cần làm thêm — onclick="go()" trong HTML sẽ gọi go() mới */
+});
 </script>
 </body>
 </html>
